@@ -35,8 +35,7 @@
         <div id="aboutContent">
             <img class="infoImage" src="Images/nobleos.png" width="400">
             <p>Created by @vrplays. Currently a work in progress.</p>
-
-            <p>NobleOS is a simple Operating System built entirely in your browser. It contains multiple apps like a calculator, clock, and browser.</p>
+            <p>NobleOS is a simple Operating System built entirely in your browser. It contains a couple apps like a calculator or a browser.</p>
             <em>NobleOS was created during the Stardance challenge.</em>
         </div>
 
@@ -98,14 +97,14 @@
             <img src="Images/browser.png" width="28">
             <span>Browser</span>
         </div>
+        <div class="startMenuItem" onclick="openWindow('themingWindow')">
+            <img src="Images/paint.png" width="28" style="padding-left: 3px;">
+            <span>Customize Theme</span>
+        </div>
     </div>
 
     <div id="taskbar">
-        <button id="startButton"
-        style="background-color: darkgoldenrod;
-        border-radius: 50%;">
-        <img src="Images/logo.png" width="20">
-    </button>
+        <button id="startButton"><img src="Images/logo.png" width="20"></button>
     <div id="taskbarApps"></div>
     <div id="clock">00:00</div>
     </div>
@@ -132,16 +131,16 @@
     </div>
 
     <div class="browserToolbar">
-        <button onclick="goBack()">←</button>
-        <button onclick="goForward()">→</button>
+        <button class="backButton" onclick="goBack()">←</button>
+        <button class="forwardButton" onclick="goForward()">→</button>
 
         <input
             type="text"
             id="urlInput"
-            placeholder="Enter URL"
+            placeholder="Put a URL here..."
         >
 
-        <button onclick="loadPage()">Go</button>
+        <button class="goButton" onclick="loadPage()">Go</button>
     </div>
 
     <iframe
@@ -153,7 +152,18 @@
             border:none;
         ">
     </iframe>
+    </div>
 
+    <div id="themingWindow" class="window">
+        <div class="title-bar">
+            <span>Customize OS Theme</span>
+            <button class="closeButton" onclick="closeWindow(this)">⤫</button>
+        </div>
+        <button class="themeButton" id="classicTheme">Classic Theme</button>
+        <button class="themeButton" id="blueTheme">Blue Theme</button>
+        <button class="themeButton" id="pinkTheme">Pink Theme</button>
+        <button class="themeButton" id="darkTheme">Dark Theme</button>
+        <button class="themeButton" id="lightTheme">Light Theme</button>
     </div>
 
     <script>
@@ -186,7 +196,8 @@
         const appNames = {
             'aboutWindow': 'About',
             'calculatorWindow': 'Calculator',
-            'browserWindow': 'Browser'
+            'browserWindow': 'Browser',
+            'themingWindow': 'Theming'
         };
 
         function openWindow(id) {
@@ -268,6 +279,85 @@
             }
         }
 
+        const themes = {
+            classic: {
+                '--window-top': '#fcf3a0',
+                '--window-bot': '#e4c267',
+                '--titlebar':   '#d4a017',
+                '--accent':     '#b8860b',
+                '--op-bg':      '#fcf3a0',
+                '--op-color':   '#000000',
+                '--op-hover':   '#e4c267',
+                '--bg':         'url("Images/Backgrounds/bg.png")',
+                logo:           'Images/Logos/logo.png',
+            },
+            blue: {
+                '--window-top': '#1a27d6',
+                '--window-bot': '#67b6e4',
+                '--titlebar':   '#1565c0',
+                '--accent':     '#357fd4',
+                '--op-bg':      '#1976d2',
+                '--op-color':   '#ffffff',
+                '--op-hover':   '#2a5f9c',
+                '--bg':         'url("Images/Backgrounds/bluebg.png")',
+                logo:           'Images/Logos/bluelogo.png',
+            },
+            pink: {
+                '--window-top': '#e944c0',
+                '--window-bot': '#e680fd',
+                '--titlebar':   '#cd22d6',
+                '--accent':     '#ac27b3',
+                '--op-bg':      '#f25afa',
+                '--op-color':   '#ffffff',
+                '--op-hover':   '#a83bad',
+                '--bg':         'url("Images/Backgrounds/pinkbg.png")',
+                logo:           'Images/Logos/pinklogo.png',
+            },
+            dark: {
+                '--window-top': '#000000',
+                '--window-bot': '#9e9e9e',
+                '--titlebar':   '#222222',
+                '--accent':     '#333333',
+                '--op-bg':      '#4a4a4a',
+                '--op-color':   '#ffffff',
+                '--op-hover':   '#cccccc',
+                '--bg':         'url("Images/Backgrounds/darkbg.png")',
+                logo:           'Images/Logos/darklogo.png',
+            },
+            light: {
+                '--window-top': '#ffffff',
+                '--window-bot': '#adadad',
+                '--titlebar':   '#ffffff',
+                '--accent':     '#aaaaaa',
+                '--op-bg':      '#eeeeee',
+                '--op-color':   '#ffffff',
+                '--op-hover':   '#dddddd',
+                '--bg':         'url("Images/Backgrounds/lightbg.png")',
+                logo:           'Images/Logos/lightlogo.png',
+            }
+        };
+
+        const desktopIconBtns = document.querySelectorAll('.aboutButton button, .calculator button, #browser button');
+        const startLogo = document.querySelector('#startButton img');
+
+        function setTheme(name) {
+            const t = themes[name];
+            if (!t) return;
+            for (const [prop, val] of Object.entries(t)) {
+                if (prop.startsWith('--')) document.body.style.setProperty(prop, val);
+            }
+            desktopIconBtns.forEach(btn => btn.style.backgroundColor = t['--accent']);
+            document.getElementById('startButton').style.backgroundColor = t['--accent'];
+            startLogo.src = t.logo;
+        }
+
+        document.getElementById('classicTheme').onclick = () => setTheme('classic');
+        document.getElementById('blueTheme').onclick = () => setTheme('blue');
+        document.getElementById('pinkTheme').onclick = () => setTheme('pink');
+        document.getElementById('darkTheme').onclick = () => setTheme('dark');
+        document.getElementById('lightTheme').onclick = () => setTheme('light');
+        setTheme('classic');
+
         function updateClock() {
             const now = new Date();
 
@@ -282,34 +372,43 @@
         updateClock();
         setInterval(updateClock, 1000);
 
+        let browserHistory = ['https://example.com'];
+        let histIdx = 0;
+
+        document.getElementById('urlInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') loadPage();
+        });
+
         function loadPage() {
-        let url = document.getElementById("urlInput").value;
-
-        if (
-            !url.startsWith("http://") &&
-            !url.startsWith("https://")
-        ) {
-            url = "https://" + url;
-        }
-
-        document.getElementById("browserFrame").src = url;
+            let url = document.getElementById("urlInput").value;
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url;
+            }
+            browserHistory = browserHistory.slice(0, histIdx + 1);
+            browserHistory.push(url);
+            histIdx = browserHistory.length - 1;
+            document.getElementById("browserFrame").src = url;
         }
 
         function goBack() {
-            try {document.getElementById("browserFrame")
-            .contentWindow
-            .history
-            .back();
-        } catch {}
+            if (histIdx > 0) {
+                histIdx--;
+                const url = browserHistory[histIdx];
+                document.getElementById("urlInput").value = url;
+                document.getElementById("browserFrame").src = url;
+            }
         }
 
         function goForward() {
-            try {document.getElementById("browserFrame")
-            .contentWindow
-            .history
-            .forward();
-        } catch {}
-        }let tabs = [];
+            if (histIdx < browserHistory.length - 1) {
+                histIdx++;
+                const url = browserHistory[histIdx];
+                document.getElementById("urlInput").value = url;
+                document.getElementById("browserFrame").src = url;
+            }
+        }
+
+
     </script>
 
 </body>
