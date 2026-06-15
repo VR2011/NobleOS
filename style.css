@@ -30,7 +30,7 @@
             align-items: center;
         }
 
-        .close-btn {
+        .closeButton {
             cursor: pointer;
             font-size: 25px;
             background-color: #00000000;
@@ -59,6 +59,10 @@
             color: #000000;
             letter-spacing: 0.3px;
             text-align: center;
+        }
+
+        .infoImage {
+            padding-left: 35px;
         }
 
         .calculator {
@@ -150,4 +154,126 @@
 
         .calculatorButtons button.clear:hover {
             background-color: #a93226;
+        }
+
+        #taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            box-sizing: border-box;
+            z-index: 9999;
+        }
+
+        #startButton {
+            height: 30px;
+            width: 30px;
+            padding-top: 3px;
+            padding-left: 5px;
+            border: none;
+            background: darkgoldenrod;
+            color: white;
+            cursor: pointer;
+        }
+
+        #clock {
+            color: white;
+        }
+        #startMenu {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            left: 0;
+            width: 220px;
+            background: #afafaf;
+            border-radius: 0 8px 0 0;
+            padding: 8px;
+            z-index: 10000;
+            box-shadow: 4px -4px 16px rgba(0,0,0,0.3);
+        }
+
+        .startMenuItem {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            color: black;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .startMenuItem:hover {
+            background: #ccc;
+        }
+
+        #taskbarApps {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .taskbarAppButton {
+            background: #444;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 3px 14px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            height: 28px;
+        }
+
+        .taskbarAppButton:hover {
+            background: #5a5a5a;
+        }
+
+        #browser {
+            position: fixed;
+            top: 240px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .browserText {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            letter-spacing: 0.3px;
+            text-align: center;
+            font-family: Nunito;
+        }
+
+        #browserWindow {
+            width: 900px;
+            height: 600px;
+        }
+
+        .browserToolbar {
+            display: flex;
+            gap: 5px;
+            padding: 5px;
+            background: #ddd;
+            color: darkgoldenrod;
+        }
+
+        .browserToolbar input {
+            flex: 1;
         }
