@@ -1,4 +1,4 @@
-![NobleOS Logo](/Images/OS Images/nobleos.png)
+![NobleOS Logo](/Images/OS%20Images/nobleos.png)
 An operating system inside a single website.
 
 ## Features
