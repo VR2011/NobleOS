@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="aboutButton">
+    <div id="aboutButton">
         <button onclick="openWindow('aboutWindow')"
         style="
         background-color: darkgoldenrod;
@@ -34,14 +34,17 @@
 
         <div id="aboutContent">
             <img class="infoImage" src="Images/OS Images/nobleos.png" width="400">
-            <p>Created by @vrplays. Currently a work in progress.</p>
+            <p>Created by @vrplays. All image credits are in the README.</p>
             <p>NobleOS is a simple Operating System built entirely in your browser. It contains a couple apps like a calculator or a browser.</p>
             <em>NobleOS was created during the Stardance challenge.</em>
+            <a id="githubLink" href="https://github.com/VR2011/NobleOS">
+                <img src="Images/OS Images/Github.png" width="30">
+            </a>
         </div>
 
     </div>
 
-    <div class="calculator">
+    <div id="calculatorButton">
         <button onclick="openWindow('calculatorWindow')"
         style="background-color: darkgoldenrod;
         border: goldenrod;
@@ -97,6 +100,14 @@
             <img src="Images/OS Images/browser.png" width="28">
             <span>Browser</span>
         </div>
+        <div class="startMenuItem" onclick="openWindow('terminalWindow')">
+            <img src="Images/OS Images/terminal.png" width="28">
+            <span>Terminal</span>
+        </div>
+        <div class="startMenuItem" onclick="openWindow('filesWindow')">
+            <img src="Images/OS Images/files.png" width="28">
+            <span>Files</span>
+        </div>
         <div class="startMenuItem" onclick="openWindow('themingWindow')">
             <img src="Images/OS Images/paint.png" width="28" style="padding-left: 3px;">
             <span>Customize Theme</span>
@@ -109,7 +120,7 @@
     <div id="clock">00:00</div>
     </div>
 
-    <div id="browser">
+    <div id="browserButton">
         <button onclick="openWindow('browserWindow')" style="
             background-color: darkgoldenrod;
             border: goldenrod;
@@ -122,6 +133,32 @@
             <img src="Images/OS Images/browser.png" width="60">
         </button>
         <p class="browserText">Browser</p>
+    </div>
+
+    <div id="terminalButton">
+        <button onclick="openWindow('terminalWindow')"
+        style="background-color: darkgoldenrod;
+        border: goldenrod;
+        border-radius: 20%;
+        width: 75px;
+        height: 75px;
+        cursor: pointer;">
+        <img src="Images/OS Images/terminal.png" width="50">
+        </button>
+        <p class="terminalText">Terminal</p>
+    </div>
+
+    <div id="filesButton">
+        <button onclick="openWindow('filesWindow')"
+        style="background-color: darkgoldenrod;
+        border: goldenrod;
+        border-radius: 20%;
+        width: 75px;
+        height: 75px;
+        cursor: pointer;">
+        <img src="Images/OS Images/files.png" width="50">
+        </button>
+        <p class="filesText">Files</p>
     </div>
 
     <div id="browserWindow" class="window">
@@ -145,7 +182,7 @@
 
     <iframe
         id="browserFrame"
-        src="https://example.com"
+        src="https://en.wikipedia.org/wiki/Operating_system"
         style="
             width:100%;
             height:calc(100% - 50px);
@@ -154,16 +191,71 @@
     </iframe>
     </div>
 
+    <div id="terminalWindow" class="window">
+        <div class="title-bar">
+            <span>Terminal</span>
+            <button class="closeButton" onclick="closeWindow(this)">⤫</button>
+        </div>
+        <div id="terminalOutput"></div>
+        <div id="terminalInputLine">
+            <span class="terminalPrompt">user@nobleos:~$&nbsp;</span>
+            <input type="text" id="terminalInput" autocomplete="off" spellcheck="false">
+        </div>
+    </div>
+
+    <div id="filesWindow" class="window">
+        <div class="title-bar">
+            <span>Files</span>
+            <button class="closeButton" onclick="closeWindow(this)">⤫</button>
+        </div>
+        <div id="filesToolbar">
+            <button id="filesBackBtn" onclick="filesGoBack()">&#8592;</button>
+            <span id="filesBreadcrumb">Home</span>
+        </div>
+        <div id="filesBody">
+            <div id="filesSidebar">
+                <div class="sidebarItem" onclick="filesGoHome()">Home</div>
+            </div>
+            <div id="filesContent"></div>
+        </div>
+        <div id="filesContextMenu">
+            <div class="contextMenuItem" id="ctxNewFolder" onclick="fsCreateItem('folder')">New Folder</div>
+            <div class="contextMenuItem" id="ctxNewFile" onclick="fsCreateItem('file')">New Text Document</div>
+            <div class="contextMenuItem" id="ctxRename" onclick="fsRenameItem()">Rename</div>
+            <div class="contextMenuItem" id="ctxDelete" onclick="fsDeleteItem()" style="color:#c0392b; border-top: 1px solid #eee;">Delete</div>
+        </div>
+    </div>
+
+    <div id="textEditorWindow" class="window">
+        <div class="title-bar">
+            <span id="textEditorTitle">Document</span>
+            <button class="closeButton" onclick="closeWindow(this)">⤫</button>
+        </div>
+        <div id="textEditorToolbar">
+            <button onclick="saveTextFile()">Save</button>
+        </div>
+        <textarea id="textEditorContent" spellcheck="false"></textarea>
+    </div>
+
     <div id="themingWindow" class="window">
         <div class="title-bar">
             <span>Customize OS Theme</span>
             <button class="closeButton" onclick="closeWindow(this)">⤫</button>
         </div>
-        <button class="themeButton" id="classicTheme">Classic Theme</button>
-        <button class="themeButton" id="blueTheme">Blue Theme</button>
-        <button class="themeButton" id="pinkTheme">Pink Theme</button>
-        <button class="themeButton" id="darkTheme">Dark Theme</button>
-        <button class="themeButton" id="lightTheme">Light Theme</button>
+        <div id="themingTabs">
+            <button class="themingTab active" id="tabThemes" onclick="switchThemingTab('themes')">Themes</button>
+            <button class="themingTab" id="tabWallpapers" onclick="switchThemingTab('wallpapers')">Wallpapers</button>
+        </div>
+        <div id="themingTabThemes" class="themingPane">
+            <button class="themeButton" id="classicTheme">Classic Theme</button>
+            <button class="themeButton" id="blueTheme">Blue Theme</button>
+            <button class="themeButton" id="pinkTheme">Pink Theme</button>
+            <button class="themeButton" id="darkTheme">Dark Theme</button>
+            <button class="themeButton" id="lightTheme">Light Theme</button>
+        </div>
+        <div id="themingTabWallpapers" class="themingPane" style="display:none;">
+            <div id="wallpaperGrid"></div>
+        </div>
     </div>
 
     <script>
@@ -197,15 +289,20 @@
             'aboutWindow': 'About',
             'calculatorWindow': 'Calculator',
             'browserWindow': 'Browser',
-            'themingWindow': 'Theming'
+            'themingWindow': 'Theming',
+            'terminalWindow': 'Terminal',
+            'filesWindow': 'Files',
+            'textEditorWindow': 'Text Editor'
         };
 
         function openWindow(id) {
             const win = document.getElementById(id);
-            win.style.display = 'block';
+            const flexWindows = ['terminalWindow', 'filesWindow', 'textEditorWindow', 'themingWindow'];
+            win.style.display = flexWindows.includes(id) ? 'flex' : 'block';
             win.style.zIndex = ++zTop;
             addTaskbarEntry(id);
             closeStartMenu();
+            if (id === 'terminalWindow') document.getElementById('terminalInput').focus();
         }
 
         function closeWindow(btn) {
@@ -288,6 +385,7 @@
                 '--op-bg':      '#fcf3a0',
                 '--op-color':   '#000000',
                 '--op-hover':   '#e4c267',
+                '--button-text': '#000000   ',
                 '--bg':         'url("Images/Backgrounds/bg.png")',
                 logo:           'Images/Logos/logo.png',
             },
@@ -299,6 +397,7 @@
                 '--op-bg':      '#1976d2',
                 '--op-color':   '#ffffff',
                 '--op-hover':   '#2a5f9c',
+                '--button-text': '#000000',
                 '--bg':         'url("Images/Backgrounds/bluebg.png")',
                 logo:           'Images/Logos/bluelogo.png',
             },
@@ -310,6 +409,7 @@
                 '--op-bg':      '#f25afa',
                 '--op-color':   '#ffffff',
                 '--op-hover':   '#a83bad',
+                '--button-text': '#000000',
                 '--bg':         'url("Images/Backgrounds/pinkbg.png")',
                 logo:           'Images/Logos/pinklogo.png',
             },
@@ -321,6 +421,7 @@
                 '--op-bg':      '#4a4a4a',
                 '--op-color':   '#ffffff',
                 '--op-hover':   '#cccccc',
+                '--button-text': '#ffffff',
                 '--bg':         'url("Images/Backgrounds/darkbg.png")',
                 logo:           'Images/Logos/darklogo.png',
             },
@@ -332,23 +433,247 @@
                 '--op-bg':      '#eeeeee',
                 '--op-color':   '#ffffff',
                 '--op-hover':   '#dddddd',
+                '--button-text': '#000000',
                 '--bg':         'url("Images/Backgrounds/lightbg.png")',
                 logo:           'Images/Logos/lightlogo.png',
             }
         };
 
-        const desktopIconBtns = document.querySelectorAll('.aboutButton button, .calculator button, #browser button');
+        const desktopIconBtns = document.querySelectorAll('#aboutButton button, #calculatorButton button, #browserButton button, #terminalButton button, #filesButton button');
         const startLogo = document.querySelector('#startButton img');
+
+        let currentTheme = 'classic';
 
         function setTheme(name) {
             const t = themes[name];
             if (!t) return;
+            currentTheme = name;
             for (const [prop, val] of Object.entries(t)) {
                 if (prop.startsWith('--')) document.body.style.setProperty(prop, val);
             }
             desktopIconBtns.forEach(btn => btn.style.backgroundColor = t['--accent']);
             document.getElementById('startButton').style.backgroundColor = t['--accent'];
             startLogo.src = t.logo;
+        }
+
+        function appendTerminalLine(text, cls) {
+            const output = document.getElementById('terminalOutput');
+            const pre = document.createElement('pre');
+            pre.className = cls || '';
+            pre.textContent = text;
+            output.appendChild(pre);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function runTerminalCommand(cmd) {
+            const c = cmd.toLowerCase().trim();
+            if (c === 'help') {
+                return 'Available commands:\n  help      Show this help\n  about     About NobleOS\n  neofetch  System information\n  clear     Clear the terminal';
+            } else if (c === 'about') {
+                return 'NobleOS\nCreated by @vrplays\nA simple OS built in your browser.\nMade during the Stardance challenge.';
+            } else if (c === 'neofetch') {
+                const uptime = Math.floor(performance.now() / 1000);
+                return [
+                    '  ╔══════════════════════════════╗',
+                    '  ║         NobleOS              ║',
+                    '  ╚══════════════════════════════╝',
+                    '',
+                    '  OS:        NobleOS',
+                    '  Host:      Web Browser',
+                    '  Kernel:    JavaScript',
+                    `  Uptime:    ${uptime}s`,
+                    '  Terminal:  Terminal',
+                    
+                ].join('\n');
+            } else if (c === 'clear') {
+                return '__clear__';
+            } else {
+                return `bash: ${cmd}: command not found`;
+            }
+        }
+
+        function initTerminal() {
+            const input = document.getElementById('terminalInput');
+            const output = document.getElementById('terminalOutput');
+            appendTerminalLine('NobleOS Terminal — type "help" for commands.', 'terminal-system');
+            input.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter') return;
+                const cmd = input.value;
+                input.value = '';
+                appendTerminalLine('user@nobleos:~$ ' + cmd, 'terminal-cmd');
+                if (!cmd.trim()) return;
+                const result = runTerminalCommand(cmd);
+                if (result === '__clear__') {
+                    output.innerHTML = '';
+                } else {
+                    appendTerminalLine(result, 'terminal-output');
+                }
+            });
+            document.getElementById('terminalWindow').addEventListener('click', () => input.focus());
+        }
+
+        initTerminal();
+
+        const fileSystem = { name: 'Home', type: 'folder', children: [] };
+        let fsPath = [fileSystem];
+
+        function fsCurrent() { return fsPath[fsPath.length - 1]; }
+
+        function renderFiles() {
+            const content = document.getElementById('filesContent');
+            content.innerHTML = '';
+            document.getElementById('filesBreadcrumb').textContent = fsPath.map(f => f.name).join(' / ');
+            fsCurrent().children.forEach((item) => {
+                const el = document.createElement('div');
+                el.className = 'fileItem';
+                el._fsItem = item;
+                el.innerHTML = `<div class="fileItemIcon">${item.type === 'folder' ? '&#128193;' : '&#128196;'}</div><span class="fileItemName">${item.name}</span>`;
+                el.addEventListener('dblclick', () => {
+                    if (item.type === 'folder') { fsPath.push(item); renderFiles(); }
+                    else { openTextFile(item); }
+                });
+                content.appendChild(el);
+            });
+        }
+
+        function filesGoBack() {
+            if (fsPath.length > 1) { fsPath.pop(); renderFiles(); }
+        }
+
+        function filesGoHome() { fsPath = [fileSystem]; renderFiles(); }
+
+        function fsCreateItem(type) {
+            hideFilesContextMenu();
+            const name = type === 'folder' ? 'New Folder' : 'New Document.txt';
+            const item = type === 'folder'
+                ? { name, type, children: [] }
+                : { name, type, content: '' };
+            fsCurrent().children.push(item);
+            renderFiles();
+            const items = document.querySelectorAll('.fileItem');
+            if (items.length) startRename(items[items.length - 1], item);
+        }
+
+        function startRename(el, item) {
+            const nameEl = el.querySelector('.fileItemName');
+            const original = item.name;
+            nameEl.contentEditable = 'true';
+            nameEl.focus();
+            const range = document.createRange();
+            range.selectNodeContents(nameEl);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            const finish = () => {
+                nameEl.contentEditable = 'false';
+                item.name = nameEl.textContent.trim() || original;
+                nameEl.textContent = item.name;
+            };
+            nameEl.addEventListener('blur', finish, { once: true });
+            nameEl.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); nameEl.blur(); }
+                if (e.key === 'Escape') { nameEl.textContent = original; nameEl.blur(); }
+            });
+        }
+
+        let editingFile = null;
+
+        function openTextFile(item) {
+            editingFile = item;
+            document.getElementById('textEditorContent').value = item.content || '';
+            document.getElementById('textEditorTitle').textContent = item.name;
+            openWindow('textEditorWindow');
+        }
+
+        function saveTextFile() {
+            if (editingFile) editingFile.content = document.getElementById('textEditorContent').value;
+            closeWindow(document.querySelector('#textEditorWindow .closeButton'));
+        }
+
+        const filesContextMenu = document.getElementById('filesContextMenu');
+        let contextTarget = null;
+
+        function hideFilesContextMenu() { filesContextMenu.style.display = 'none'; contextTarget = null; }
+
+        function fsDeleteItem() {
+            if (!contextTarget) return;
+            const item = contextTarget._fsItem;
+            hideFilesContextMenu();
+            const children = fsCurrent().children;
+            const idx = children.indexOf(item);
+            if (idx !== -1) children.splice(idx, 1);
+            renderFiles();
+        }
+
+        function fsRenameItem() {
+            if (!contextTarget) return;
+            const el = contextTarget;
+            const item = contextTarget._fsItem;
+            hideFilesContextMenu();
+            startRename(el, item);
+        }
+
+        document.getElementById('filesContent').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            contextTarget = e.target.closest('.fileItem');
+            const onItem = !!contextTarget;
+            document.getElementById('ctxNewFolder').style.display = onItem ? 'none' : 'block';
+            document.getElementById('ctxNewFile').style.display = onItem ? 'none' : 'block';
+            document.getElementById('ctxRename').style.display = onItem ? 'block' : 'none';
+            document.getElementById('ctxDelete').style.display = onItem ? 'block' : 'none';
+            const winRect = document.getElementById('filesWindow').getBoundingClientRect();
+            filesContextMenu.style.display = 'block';
+            filesContextMenu.style.left = (e.clientX - winRect.left) + 'px';
+            filesContextMenu.style.top = (e.clientY - winRect.top) + 'px';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#filesContextMenu')) hideFilesContextMenu();
+        });
+
+        renderFiles();
+
+        const wallpaperOptions = [
+            {name: 'Default', path: null },
+            {name: 'Lush', path: 'Images/Backgrounds/Wallpapers/Lush.jpg'},
+            {name: 'Mountain', path: "Images/Backgrounds/Wallpapers/Mountain.jpg"},
+            {name: 'Night', path: "Images/Backgrounds/Wallpapers/Night.jpg"},
+            {name: 'Simple', path: "Images/Backgrounds/Wallpapers/Simple.jpg"}
+        ];
+
+        function switchThemingTab(tab) {
+            document.getElementById('themingTabThemes').style.display = tab === 'themes' ? 'block' : 'none';
+            document.getElementById('themingTabWallpapers').style.display = tab === 'wallpapers' ? 'block' : 'none';
+            document.getElementById('tabThemes').classList.toggle('active', tab === 'themes');
+            document.getElementById('tabWallpapers').classList.toggle('active', tab === 'wallpapers');
+            if (tab === 'wallpapers') renderWallpapers();
+        }
+
+        function setWallpaper(path) {
+            const bg = path ? `url("${path}")` : themes[currentTheme]['--bg'];
+            document.body.style.setProperty('--bg', bg);
+        }
+
+        function renderWallpapers() {
+            const grid = document.getElementById('wallpaperGrid');
+            grid.innerHTML = '';
+            wallpaperOptions.forEach(wp => {
+                const card = document.createElement('div');
+                card.className = 'wallpaperCard';
+                if (wp.path) {
+                    card.style.backgroundImage = `url("${wp.path}")`;
+                    card.style.backgroundSize = 'cover';
+                    card.style.backgroundPosition = 'center';
+                } else {
+                    card.style.background = 'linear-gradient(135deg, #E4C267, #FCF3A0)';
+                }
+                const label = document.createElement('span');
+                label.className = 'wallpaperLabel';
+                label.textContent = wp.name;
+                card.appendChild(label);
+                card.onclick = () => setWallpaper(wp.path);
+                grid.appendChild(card);
+            });
         }
 
         document.getElementById('classicTheme').onclick = () => setTheme('classic');
